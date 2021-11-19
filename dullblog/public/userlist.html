@@ -32,24 +32,13 @@
                 
                 for (let value of data) {
 
-                    let date = new Date(value.date);
-
-                    let html = "<h2>" + value.heading + "</h2>";
-                    html += "<p>" + date.toLocaleDateString() + "</p>";
-                    html += "<p>" + value.blogtext + "</p><hr>";
+                    let html = "<b><h2>Username: " + value.username + "</h2></b>";
+                    html += "<p>User ID :" + value.id + "</p><hr>";
 
                     let div = document.createElement("div");
                     div.innerHTML = html;
                     container.appendChild(div);
 
-                    let delbtn = document.createElement("button");
-                    delbtn.innerHTML = "Delete";
-
-                    delbtn.addEventListener('click', function(evt) {
-                        deleteBlogPost(value.id);
-                    });
-
-                    div.insertBefore(delbtn, div.lastElementChild);
                 }
             }
             catch(error) {
@@ -61,7 +50,7 @@
         
         
         // start ----------------------------------------
-        listBlogPosts();
+        listUsers();
 
     </script>
 
