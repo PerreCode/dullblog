@@ -12,7 +12,13 @@ router.post("/users/login", async function(req,res,next){
 
 // list all users ---------------------
 router.get("/users", async function(req,res,next){
-    res.status(200).send("Hello from GET - /users").end();
+    try{
+        let data = await db.getAllUsers();
+        res.status(200).json(data.rows).end();
+    }
+    catch(err){
+        next(err);
+    }
 });
 
 // create a new user ---------------------
