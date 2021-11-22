@@ -17,7 +17,7 @@
         let container = document.getElementById('container');
 
         //-----------------------------------------------
-        async function listUsers() {
+        async function listUsers(){
 
             let url = "/users";            
 
@@ -25,14 +25,14 @@
                 let response = await fetch(url);
                 let data = await response.json();
                 
-                if (response.status != 200) {
+                if(response.status !== 200){
                     throw data.error;
                 }
 
-                container.innerHTML = ""; //delete previous content
+                container.innerHTML = ""; // delete previous content
                 
-                for (let value of data) {
-                    let date = new Date(value.date);
+                for (let value of data){
+                   // let date = new Date(value.date);
 
                     let html = "<b><h2>Username: " + value.username + "</h2></b>";
                     html += "<p>User ID :" + value.id + "</p><hr>";
@@ -43,7 +43,7 @@
 
                 }
             }
-            catch(error) {
+            catch(error){
                 console.log(error);
             }
         }

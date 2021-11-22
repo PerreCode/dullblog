@@ -37,14 +37,14 @@
                 let response = await fetch(url, cfg);               
                 let data = await response.json();
                 
-                if (response.status != 200) {
+                if(response.status !== 200){
                     throw data.error;
                 }
                 
                 txtResult.innerHTML = data.msg;
                 localStorage.setItem("token", data.token);
             }
-            catch(error) {
+            catch(error){
                 txtResult.innerHTML = "Something went wrong - check the console window";
             }            
         });        

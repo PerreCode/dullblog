@@ -18,12 +18,12 @@
     <!------------- JavaScript --------------->
     <script>
         
-        let inpUsername = document.getElementById('inpUsername');
-        let inpPassword = document.getElementById('inpPassword');
-        let btnCreate = document.getElementById('btnCreate');
-        let txtResult = document.getElementById('txtResult');
+        let inpUsername = document.getElementById("inpUsername");
+        let inpPassword = document.getElementById("inpPassword");
+        let btnCreate = document.getElementById("btnCreate");
+        let txtResult = document.getElementById("txtResult");
 
-        btnCreate.addEventListener('click', async function(evt) {
+        btnCreate.addEventListener("click", async function(evt) {
             
             let url = "/users";
             let credString = createCredentialString(inpUsername.value, inpPassword.value);
@@ -37,17 +37,17 @@
                 let response = await fetch(url, cfg);               
                 let data = await response.json();
                 
-                if (response.status != 200) {
+                if(response.status !== 200){
                     throw data.error;
                 }
                 
                 txtResult.innerHTML = data.msg;
             }
-            catch(error) {
+            catch(error){
                 console.log(error);
                 txtResult.innerHTML = "Something went wrong - check the console window";
             }            
-        });        
+        })        
 
 
     // ---------------
