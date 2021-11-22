@@ -6,11 +6,11 @@ const router = express.Router();
 // endpoints ----------------------
 
 // user login ---------------------
-router.post("/users/login", async function(req, res, next){
+router.post("/users/login", async function(req, res, next) {
     let credString = req.headers.authorization;
     let cred = authUtils.decodeCred(credString);
 
-    if(cred.username === "" || cred.password === ""){
+    if (cred.username === "" || cred.password === "") {
         res.status(401).json({error: "No username or password"}).end();
         return;
     }
@@ -18,7 +18,7 @@ router.post("/users/login", async function(req, res, next){
     try {
         let data = await db.getUser(cred.username);
 
-        if(data.rows.length > 0){
+        if (data.rows.length > 0) {
         let userid = data.rows[0].id;
         let username = data.rows[0].username;
         let passwordHash = data.rows[0].password;
@@ -33,52 +33,52 @@ router.post("/users/login", async function(req, res, next){
                 }).end();
 
             }else{
-                res.status(403).json({error: "Wrong password :("}).end();
+                res.status(403).json({msg: "Wrong password :("}).end();
                 return;
             }
-        } else {
-            res.status(403).send("No user found");
+        }else{
+            res.status(401).send("No user found");
             return;
         }
-    } catch(err) {
+    }
+    catch (err){
         next(err);
     }
-})
+});
 
 // list all users ---------------------
-router.get("/users", async function(req, res, next){
-    try {
+router.get("/users", async function(req,res,next){
+    try{
         let data = await db.getAllUsers();
         res.status(200).json(data.rows).end();
-    }
-    catch(err) {
+    }catch(err){
         next(err);
     }
-})
+});
 
 // create a new user ---------------------
-router.post("/users", async function(req, res, next){
+router.post("/users", async function(req,res,next){
 
     let credString = req.headers.authorization;
     let cred = authUtils.decodeCred(credString);
 
-    if(cred.username === "" || cred.password === ""){
+    if (cred.username === "" || cred.password === "") {
         res.status(401).json({error: "No username or password"}).end();
         return;
     }
 
     let hash = authUtils.createHash(cred.password);
 
-    try{
+    try {
         let data = await db.createUser(cred.username, hash.value, hash.salt);
 
-        if(data.rows.length > 0){
+        if (data.rows.length > 0) {
             res.status(200).json({msg: "The user was created successfully"}).end();
-        } else {
+        }else{
             throw "The user couldn't be created";
         }
     }
-    catch(err){
+    catch (err){
         next(err);
     }
 })
@@ -86,7 +86,7 @@ router.post("/users", async function(req, res, next){
 // delete a user ---------------------
 router.delete("/users", async function(req, res, next){
     res.status(200).send("Hello from DELETE - /users").end();
-})
+});
 
 // ----
 module.exports = router;

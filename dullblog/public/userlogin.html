@@ -10,8 +10,8 @@
     <!----------- HTML-elements -------------->   
     <a href="index.html">Home</a><hr> 
     <h1>Login</h1>
-    <input id="inpUsername" type="text" placeholder="Username"/><br><br>
-    <input id="inpPassword" type="text" placeholder="Password"/><br><br>
+    <input id="inpUsername" type="text" placeholder="Username"/> <br><br>
+    <input id="inpPassword" type="text" placeholder="Password"/> <br><br>
     <button id="btnLogin">Login</button><br>
     <h3 id="txtResult">Result...</h3>
         
@@ -26,32 +26,32 @@
         btnLogin.addEventListener('click', async function(evt) {
             
             let url = "/users/login";
-            let credString = createCredentialString(inpUsername.value, inpPassword.value);
+            let credString = createCredentialString(inpUsername.value, inpPassword.value)
 
             let cfg = {
                 method: "POST",
                 headers: {"authorization":credString}
             }           
 
-            try {                
+            try{                
                 let response = await fetch(url, cfg);               
                 let data = await response.json();
                 
-                if(response.status !== 200){
+                if(response.status != 200){
                     throw data.error;
                 }
                 
                 txtResult.innerHTML = data.msg;
                 localStorage.setItem("token", data.token);
             }
-            catch(error){
+            catch(err){
                 txtResult.innerHTML = "Something went wrong - check the console window";
             }            
         });        
 
 
     // ---------------
-    function createCredentialString(username, password){
+    function createCredentialString(username,password){
         let combinedStr = username + ":" + password;
         let b64Str = btoa(combinedStr);
         return "basic " + b64Str;

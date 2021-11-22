@@ -17,11 +17,11 @@
         let container = document.getElementById("container");
 
         //-----------------------------------------------
-        async function listBlogPosts(){
+        async function listBlogPosts() {
 
             let url = "/blogposts";
             
-            let token = localStorage.getItem("token");
+            let token = localStorage.getItem("token")
 
             let cfg = {
                 method: "GET",
@@ -29,14 +29,14 @@
             }
 
             try {
-                let response = await fetch(url, cfg);
+                let response = await fetch(url,cfg);
                 let data = await response.json();
                 
-                if(response.status !== 200){
+                if(response.status != 200){
                     throw data.error;
                 }
 
-                container.innerHTML = ""; // delete previous content
+                container.innerHTML = ""; //delete previous content
                 
                 for(let value of data){
 
@@ -56,12 +56,12 @@
 
                     delbtn.addEventListener("click", function(evt){
                         deleteBlogPost(value.id);
-                    })
+                    });
 
                     div.insertBefore(delbtn, div.lastElementChild);
                 }
             }
-            catch(error){
+            catch(error) {
                 console.log(error);
             }
         }
@@ -85,17 +85,17 @@
                 body: JSON.stringify(updata)
             }           
 
-            try {                
+            try{                
                 let response = await fetch(url, cfg);               
                 let data = await response.json();
                 
-                if(response.status !== 200){
-                    throw data.error;
+                if(response.status != 200){
+                    throw data.error
                 }
                 
-                listBlogPosts(); //refresh the list                
+                listBlogPosts() //refresh the list                
             }
-            catch(error) {
+            catch(error){
                 throw "You can't delete someone elses blogpost!"
             }  
         }
