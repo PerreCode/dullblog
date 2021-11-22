@@ -8,6 +8,7 @@
 <body>
 
     <!----------- HTML-elements -------------->
+    <a href="index.html">Home</a><hr> 
     <div id="container"></div>    
         
     <!------------- JavaScript --------------->
@@ -31,6 +32,7 @@
                 container.innerHTML = ""; //delete previous content
                 
                 for (let value of data) {
+                    let date = new Date(value.date);
 
                     let html = "<b><h2>Username: " + value.username + "</h2></b>";
                     html += "<p>User ID :" + value.id + "</p><hr>";

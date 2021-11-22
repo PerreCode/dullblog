@@ -7,12 +7,12 @@
 </head>
 <body>
 
-    <!----------- HTML-elements -------------->  
-    <a href="index.html">Home</a><hr>   
-    <h1>Create new user</h1>
+    <!----------- HTML-elements -------------->   
+    <a href="index.html">Home</a><hr> 
+    <h1>Login</h1>
     <input id="inpUsername" type="text" placeholder="Username"/><br><br>
     <input id="inpPassword" type="text" placeholder="Password"/><br><br>
-    <button id="btnCreate">Create user</button><br>
+    <button id="btnLogin">Login</button><br>
     <h3 id="txtResult">Result...</h3>
         
     <!------------- JavaScript --------------->
@@ -20,12 +20,12 @@
         
         let inpUsername = document.getElementById('inpUsername');
         let inpPassword = document.getElementById('inpPassword');
-        let btnCreate = document.getElementById('btnCreate');
+        let btnLogin = document.getElementById('btnLogin');
         let txtResult = document.getElementById('txtResult');
 
-        btnCreate.addEventListener('click', async function(evt) {
+        btnLogin.addEventListener('click', async function(evt) {
             
-            let url = "/users";
+            let url = "/users/login";
             let credString = createCredentialString(inpUsername.value, inpPassword.value);
 
             let cfg = {
@@ -42,9 +42,9 @@
                 }
                 
                 txtResult.innerHTML = data.msg;
+                localStorage.setItem("token", data.token);
             }
             catch(error) {
-                console.log(error);
                 txtResult.innerHTML = "Something went wrong - check the console window";
             }            
         });        

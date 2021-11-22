@@ -8,7 +8,8 @@
 <body>
 
     <!----------- HTML-elements -------------->    
-    <input id="inpHeading" type="text" /><br>
+    <a href="index.html">Home</a><hr> 
+    <input id="inpHeading" type="text"/><br>
     <textarea id="inpBlogtext" cols="80" rows="10"></textarea><br>
     <button id="btnCreate">Create post</button><br>
     <h3 id="txtResult">Result...</h3>
@@ -16,13 +17,12 @@
     <!------------- JavaScript --------------->
     <script>
         
-        let inpHeading = document.getElementById('inpHeading');
-        let inpBlogtext = document.getElementById('inpBlogtext');
-        let btnCreate = document.getElementById('btnCreate');
-        let txtResult = document.getElementById('txtResult');
+        let inpHeading = document.getElementById("inpHeading");
+        let inpBlogtext = document.getElementById("inpBlogtext");
+        let btnCreate = document.getElementById("btnCreate");
+        let txtResult = document.getElementById("txtResult");
 
-        btnCreate.addEventListener('click', async function(evt) {
-            
+        btnCreate.addEventListener("click", async function(evt){
             let url = "/blogposts";
 
             let updata = {
@@ -30,9 +30,14 @@
                 blogtext: inpBlogtext.value
             }
 
+            let token = localStorage.getItem("token");
+
             let cfg = {
                 method: "POST",
-                headers: {"content-type":"application/json"},
+                headers: {
+                    "content-type": "application/json",
+                    "authorization":token                
+                },
                 body: JSON.stringify(updata)
             }           
 
@@ -40,18 +45,16 @@
                 let response = await fetch(url, cfg);               
                 let data = await response.json();
                 
-                if (response.status != 200) {
+                if(response.status !== 200){
                     throw data.error;
                 }
-                
                 txtResult.innerHTML = data.msg;
             }
-            catch(error) {
+            catch(error){
                 console.log(error);
                 txtResult.innerHTML = "Something went wrong - check the console window";
             }            
         });        
-
     </script>
 
     <!---------------- CSS ------------------->
